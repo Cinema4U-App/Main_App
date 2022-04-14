@@ -1,46 +1,36 @@
 package ro.sd.a2.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.*;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 public class User {
 
     @Id
-    private String id;
+    private String userId;
 
-    @Column
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    public User(String name) {
-        this.name=name;
-    }
+    @Column(nullable = false)
+    private String password;
 
-    public User() {
-    }
+    @Column(nullable = false)
+    private String firstName;
 
-    public String getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private String lastName;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Purchase> purchaseList;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookingList;
 }

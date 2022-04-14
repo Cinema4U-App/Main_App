@@ -69,11 +69,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .profile {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
         button{
             width: 60%;
             height: 40px;
@@ -111,40 +106,30 @@
     </style>
 </head>
 <body>
-<!-- <h1>Hello World for 30433</h1>
-<h2><i>YO YO</i></h2>
-<h1>Varianta1</h1>
-<h1 th:text="${fullUserObj.getName()}"> este numele acelui user</h1>
 
-<h1>Varianta2</h1>
-<h1 th:text="${numeStudent}"> este numele acelui user</h1>
--->
 <div class="main">
     <div>
         <ul>
             <li>
                 <form th:action="@{/profile}" method="GET">
-                    <button class="active" type="submit">PROFILE</button>
+                    <button type="submit">PROFILE</button>
                 </form>
-            </li> <!-- aici o sa pun lista cu bookings si purchases si datele user-ului -->
+            </li>
             <li>
                 <form th:action="@{/history}" method="GET">
-                    <button type="submit">HISTORY</button>
+                    <button class="active" type="submit">HISTORY</button>
                 </form>
             </li>
             <li>
                 <form th:action="@{/schedule}" method="GET">
                     <button type="submit">SCHEDULE</button>
                 </form>
-            </li> <!-- aici ar trebuie sa pun un bar de selectie al cinema-ului, un calendar cu data, un bar cu
-     selectia filmului si in functie de ce nu e null, fac filtrare la program; ar trebui sa pun orele ca si butoane care sa ma duca catre
-     pagini de cumparat sau rezervat-->
+            </li>
             <li>
                 <form th:action="@{/movies}" method="GET">
                     <button type="submit">MOVIES</button>
                 </form>
-            </li> <!-- aici pun un search bar cu un buton pentru a cauta filme dupa nume + voi arata detaliile tuturor
-     filmelor sau a celor filtrate cu search + link-ul trailer-ului-->
+            </li>
             <li>
                 <form th:action="@{/about}" method="GET">
                     <button type="submit">ABOUT</button>
@@ -153,37 +138,7 @@
         </ul>
     </div>
 
-    <div class="profile">
-        <form name="profileForm" th:action="@{/profile/userMainPage}" method="POST"> <!-- o sa fac update pe date doar pe firstName, lastName -->
-            <label>Your profile</label>
-
-            <table>
-
-                <tr>
-                    <th scope="row">Email: </th>
-                    <td><input name="email" th:value="${loggedUser.getEmail()}" readonly></td>
-                </tr>
-
-                <tr>
-                    <th scope="row">First name: </th>
-                    <td><input name="firstName" th:value="${loggedUser.getFirstName()}" ></td>
-                </tr>
-
-                <tr>
-                    <th scope="row">Last name: </th>
-                    <td><input name="lastName" th:value="${loggedUser.getLastName()}"></td>
-                </tr>
-            </table>
-
-            <button>Edit</button>
-
-            <p>Want to log out? <a href="/app/login">Log out</a></p>
-        </form>
-    </div>
-
 </div>
-
-
 
 </body>
 </html>
