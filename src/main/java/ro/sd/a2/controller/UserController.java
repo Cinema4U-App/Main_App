@@ -53,7 +53,7 @@ public class UserController {
         }
         catch (NonexistentUserException ex){
             mav.addObject("errorMessage", 1);
-            mav.setViewName("redirect:/login");
+            mav.setViewName("login");
             log.info("Logare esuata! Redirect catre aceeasi pagina!");
         }
         return mav;
@@ -77,13 +77,13 @@ public class UserController {
             log.info("Inregistrare a user-ului cu succes!");
         }
         catch (NotMatchingPasswordsException ex){
-            mav.setViewName("redirect:/register");
             mav.addObject("errorMessage", 1);
+            mav.setViewName("register");
             log.info("Inregistrare esuata! Parolele nu sunt la fel!");
         }
         catch (ExistingUserException exx){
-            mav.setViewName("redirect:/register");
             mav.addObject("errorMessage", 2);
+            mav.setViewName("register");
             log.info("Inregistrare esuata! User-ul este deja inregistrat!");
         }
         return mav;
