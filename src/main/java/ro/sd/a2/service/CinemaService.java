@@ -40,8 +40,7 @@ public class CinemaService {
         //add the cinema into the database:
         cinema = cinemaRepository.save(cinema);
         //from entity to dto:
-        CinemaDto returnedCinemaDto = cinemaMapper.fromCinemaToDto(cinema);
-        return returnedCinemaDto;
+        return cinemaMapper.fromCinemaToDto(cinema);
     }
 
     //SELECT ALL CINEMAS OPERATION:
@@ -76,6 +75,24 @@ public class CinemaService {
                                         roomRepository.findRoomByRoomId(e.getRoom().getRoomId()).getRoomNumber())).collect(Collectors.toList());
         //sessionDtos.stream().forEach(e -> System.err.println(e.getDate()));
         return sessionDtos.stream().filter(e -> e.getDate().equals(scheduleDate)).collect(Collectors.toList());
+    }
+
+    //DELETE CINEMA FROM DB:
+    public void deleteCinema(CinemaDto cinemaDto){
+        //search for the cinema with the given name:
+        Cinema cinema = cinemaRepository.findCinemaByName(cinemaDto.getName());
+        //delete that cinema:
+        cinemaRepository.delete(cinema);
+    }
+
+    //UPDATE CINEMA FROM DB: vom putea modifica doar strada si numarul, nu si numele. Cinema-urile au nume unice.
+    public CinemaDto editCinema(CinemaDto cinemaDto){
+        //search for the cinema with the given name:
+        Cinema cinema = cinemaRepository.findCinemaByName(cinemaDto.getName());
+        cinema = cinemaRepository.save(cinema);
+        //Convert the entity to dto:
+        CinemaMapper cinemaMapper = new CinemaMapper();
+        return cinemaMapper.fromCinemaToDto(cinema);
     }
 
 }

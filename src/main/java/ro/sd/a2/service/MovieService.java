@@ -1,7 +1,6 @@
 package ro.sd.a2.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ro.sd.a2.dto.MovieDto;
 import ro.sd.a2.entity.Movie;
