@@ -217,4 +217,18 @@ public class UserController {
         return mav;
     }
 
+    //METODA ABOUT, NU FACE NIMIC MOMENTAN, NE VA DUCE TOT LA HISTORY:
+    @GetMapping("/about")
+    public ModelAndView seeAbout(){
+        ModelAndView mav = new ModelAndView();
+        if(loggedUserDto != null){
+            mav.setViewName("history");
+        }
+        else{
+            mav.setViewName("redirect:/login");
+            log.info("Niciun user logat! Redirect catre pagina de login!");
+        }
+        return mav;
+    }
+
 }

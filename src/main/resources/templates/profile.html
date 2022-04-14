@@ -177,7 +177,10 @@
 
             <button>Edit</button>
 
-            <p>Want to log out? <a href="/app/login">Log out</a></p>
+            <p>Want to log out?</p>
+        </form>
+        <form th:action="@{/logout}" method="GET">
+            <button type="submit">Log out</button>
         </form>
     </div>
 
