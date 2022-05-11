@@ -3,10 +3,13 @@ package ro.sd.a2.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import ro.sd.a2.config.RabbitSender;
 import ro.sd.a2.constants.ExistingUserException;
 import ro.sd.a2.constants.NonexistentUserException;
 import ro.sd.a2.constants.NotMatchingPasswordsException;
@@ -15,13 +18,21 @@ import ro.sd.a2.service.CinemaService;
 import ro.sd.a2.service.MovieService;
 import ro.sd.a2.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private UserDto loggedUserDto = null;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private RabbitSender rabbitSender;
 
     @Autowired
     private UserService userService;
@@ -31,6 +42,18 @@ public class UserController {
 
     @Autowired
     private CinemaService cinemaService;
+
+    private String uuid = "9d09d31e-e9e2-44c0-84be-5b3de26167c75dab64e7-c789-4418-9afa-777fcecf01f8";
+
+    @GetMapping("/bookTickets")
+    public ModelAndView buyTickets(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("seats");
+
+        rabbitSender.send(loggedUserDto);
+
+        return mav;
+    }
 
     //METODA GET PENTRU LOGIN PAGE:
     @GetMapping("/login")
@@ -72,7 +95,15 @@ public class UserController {
     public ModelAndView addUser(RegisterDto userDto){
         ModelAndView mav = new ModelAndView();
         try{
-            userService.addUser(userDto);
+            UserDto userDtoReturned = userService.addUser(userDto);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setBearerAuth(uuid);
+            System.err.println(httpHeaders.getFirst(HttpHeaders.AUTHORIZATION));
+            httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            HttpEntity<UserDto> entity = new HttpEntity<>(userDtoReturned, httpHeaders);
+            HttpStatus statusCode = restTemplate.exchange("http://localhost:8080/email/sendEmail", HttpMethod.POST, entity, UserDto.class).getStatusCode();
+            System.out.println("Status request: "+ statusCode);
+
             mav.setViewName("login");
             log.info("Inregistrare a user-ului cu succes!");
         }

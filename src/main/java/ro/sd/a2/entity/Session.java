@@ -43,4 +43,7 @@ public class Session {
     @OneToMany(mappedBy = "session")
     private List<SessionTicket> sessionTicketList;
 
+    @OneToMany(mappedBy = "session")
+    private List<ReservedSeat> reservedSeats;
+
 }

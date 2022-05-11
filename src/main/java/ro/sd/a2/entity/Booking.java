@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,5 +29,8 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
+
+    @OneToMany(mappedBy = "booking")
+    private List<ReservedSeat> reservedSeats;
 
 }

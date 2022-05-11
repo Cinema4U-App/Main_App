@@ -72,14 +72,13 @@
         button{
             width: 60%;
             height: 40px;
-            margin: 10px auto;
             justify-content: center;
             display: block;
             color: #fff;
             background: #573b8a;
             font-size: 1em;
             font-weight: bold;
-            margin-top: 20px;
+            margin: 20px auto 10px;
             outline: none;
             border: none;
             border-radius: 5px;
@@ -174,6 +173,7 @@
                     <th class="columns" scope="col">Director</th>
                     <th class="columns" scope="col">Rating</th>
                     <th class="columns" scope="col">Trailer</th>
+                    <th class="columns" scope="col"></th>
                 </tr>
 
                 <tr th:each="movie: ${movies}">

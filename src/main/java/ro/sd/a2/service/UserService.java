@@ -20,7 +20,7 @@ public class UserService {
     private UserRepository userRepository;
 
     //CREATE OPERATION:
-    public void addUser(RegisterDto userDto) throws NotMatchingPasswordsException, ExistingUserException{
+    public UserDto addUser(RegisterDto userDto) throws NotMatchingPasswordsException, ExistingUserException{
         //Verify if password and confirm password are matching:
         if(!((userDto.getPassword()).equals(userDto.getConfirmPassword()))){
             throw new NotMatchingPasswordsException();
@@ -43,6 +43,8 @@ public class UserService {
         else{
             throw new ExistingUserException();
         }
+        UserMapper userMapper = new UserMapper();
+        return userMapper.fromUserToDto(user);
     }
 
     //SELECT OPERATION:

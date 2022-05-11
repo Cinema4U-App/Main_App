@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -137,92 +137,102 @@
 </head>
 <body>
 
-<div class="main">
-    <div>
-        <ul>
-            <li>
-                <form th:action="@{/profile}" method="GET">
-                    <button type="submit">PROFILE</button>
-                </form>
-            </li>
-            <li>
-                <form th:action="@{/history}" method="GET">
-                    <button type="submit">HISTORY</button>
-                </form>
-            </li>
-            <li>
-                <form th:action="@{/schedule}" method="GET">
-                    <button class="active" type="submit">SCHEDULE</button>
-                </form>
-            </li>
-            <li>
-                <form th:action="@{/movies}" method="GET">
-                    <button type="submit">MOVIES</button>
-                </form>
-            </li>
-            <li>
-                <form th:action="@{/about}" method="GET">
-                    <button type="submit">ABOUT</button>
-                </form>
-            </li>
-        </ul>
+    <div class="main">
+
+        <div>
+            <ul>
+                <li>
+                    <form th:action="@{/profile}" method="GET">
+                        <button type="submit">PROFILE</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/history}" method="GET">
+                        <button type="submit">HISTORY</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/schedule}" method="GET">
+                        <button type="submit">SCHEDULE</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/movies}" method="GET">
+                        <button class="active" type="submit">MOVIES</button>
+                    </form>
+                </li>
+                <li>
+                    <form th:action="@{/about}" method="GET">
+                        <button type="submit">ABOUT</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <td></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td></td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>A</td>
+                <td style="background-color:red;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:red;"></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:red;"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td></td>
+                <td></td>
+                <td style="background-color:blue;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:blue;"></td>
+            </tr>
+            </tbody>
+        </table>
+
+            <p>Want to log out?</p>
+            <form th:action="@{/logout}" method="GET">
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+
     </div>
-
-    <div class="search">
-        <form name="scheduleForm" th:action="@{/schedule}" method="POST">
-
-            <div>
-                <div class="schedule">
-                    <select name="cinemaName" id="cinemaName">
-                        <optgroup th:each="cinema: ${cinemas}">
-                            <option th:text="${cinema.getName()}"></option>
-                        </optgroup>
-                    </select>
-                </div>
-
-                <div class="schedule">
-                    <label class="calendar-label" for="scheduleDate">Select date:</label>
-
-                    <input class="calendar-input" type="date" id="scheduleDate" name="scheduleDate"
-                           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-                           min="2022-01-01" max="2022-12-31">
-                </div>
-
-                <div>
-                    <br><br>
-                    <button type="submit">Search schedule</button>
-                </div>
-
-            </div>
-
-            <label>Schedule:</label>
-        </form>
-
-        <form th:action="@{/bookTickets}" method="GET">
-            <table>
-                <tr>
-                    <th class="columns" scope="col">Time</th>
-                    <th class="columns" scope="col">Movie</th>
-                    <th class="columns" scope="col">Room</th>
-                    <th class="columns" scope="col"></th>
-                </tr>
-
-                <tr th:each="sessionVar: ${sessions}">
-                    <th scope="row" th:text="${sessionVar.getTime()}"></th>
-                    <th scope="row" th:text="${sessionVar.getMovieDto().getName()}"></th>
-                    <th scope="row" th:text="${sessionVar.getRoomNumber()}"></th>
-                    <th scope="row"> <button type="submit">Book Tickets</button> </th>
-                </tr>
-            </table>
-            <tr></tr>
-        </form>
-        <p>Want to log out?</p>
-        <form th:action="@{/logout}" method="GET">
-            <button type="submit">Log out</button>
-        </form>
-    </div>
-
-</div>
 
 </body>
 </html>
